@@ -4,8 +4,23 @@ class Head extends Component{
 render(){
 return (
         <div className= 'Head'>
-            <img width='200px' height='250px' src={this.props.src} alt='upload for cv' />
-            <h1>{this.props.name}</h1>
+            <img 
+                width='200px' 
+                height='250px' 
+                src={this.props.src} 
+                alt='upload for cv' 
+            />
+            <textarea 
+                className='name' 
+                defaultValue={ this.props.name }
+                disabled={this.props.disabled}
+                style = {{ 
+                        borderStyle: this.props.disabled? 'none':'solid',
+                        resize: this.props.disabled ? 'none':'both', 
+                        color: this.props.color,
+                        backgroundColor: this.props.background,
+                        }}
+            />
         </div>
         )
     }
