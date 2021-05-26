@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/TOP-CV-Application/static/css/main.e2afe4c6.chunk.css",
+    "main.js": "/TOP-CV-Application/static/js/main.937c61cf.chunk.js",
+    "main.js.map": "/TOP-CV-Application/static/js/main.937c61cf.chunk.js.map",
+    "runtime-main.js": "/TOP-CV-Application/static/js/runtime-main.69b6040a.js",
+    "runtime-main.js.map": "/TOP-CV-Application/static/js/runtime-main.69b6040a.js.map",
+    "static/js/2.322854a9.chunk.js": "/TOP-CV-Application/static/js/2.322854a9.chunk.js",
+    "static/js/2.322854a9.chunk.js.map": "/TOP-CV-Application/static/js/2.322854a9.chunk.js.map",
+    "index.html": "/TOP-CV-Application/index.html",
+    "static/css/main.e2afe4c6.chunk.css.map": "/TOP-CV-Application/static/css/main.e2afe4c6.chunk.css.map",
+    "static/js/2.322854a9.chunk.js.LICENSE.txt": "/TOP-CV-Application/static/js/2.322854a9.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.69b6040a.js",
+    "static/js/2.322854a9.chunk.js",
+    "static/css/main.e2afe4c6.chunk.css",
+    "static/js/main.937c61cf.chunk.js"
+  ]
+}
