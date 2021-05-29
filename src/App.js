@@ -1,47 +1,41 @@
 import "./App.css";
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Section from "./components/Section";
 import Header from "./components/Head";
 import List from "./components/List";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {
+function App (props) {
+
+    const [state, setState] = useState({
       id: [],
       text: [],
       disabled: false
-    };
-  }
+    });
+ 
 
-  handleChange(event) {
+  function handleChange (event) {
   // Check for input id, if new push id and text, else setState
-    const indexOfId = this.state.id.findIndex(
+    const indexOfId = state.id.findIndex(
       (item) => item === event.target.id
     );
+    let newState = state;
     if (indexOfId !== -1) {
-      this.setState((prevState) => {
-        prevState.text[indexOfId] = event.target.value;
-        return prevState;
-      });
+    newState.text[indexOfId] = event.target.id;
+    setState(newState)
     } else {
-      this.setState((prevState) => {
-        prevState.id.push(event.target.id);
-        prevState.text.push(event.target.value);
-        return prevState;
-      });
+        newState.id.push(event.target.id);
+        newState.text.push(event.target.value);
+        setState(newState)
+      };
     }
-  }
+  
 
-  handleSubmit(e) {
-    this.setState( prevState => {
-      prevState.disabled = !prevState.disabled
-      return prevState
-    })
+  function handleSubmit() {
+    let newState = state;
+    newState.disabled = !newState.disabled
+    setState({...newState})
+ console.log(state)
   }
-  render() {
     return (
       <form >
         <div className="App">
@@ -57,7 +51,7 @@ class App extends Component {
                   width="100%"
                   height="32%"
                   color="rgb(240,100,100)"
-                  children={<Header name="Frosty" src='https://www.antarctica.gov.au/site/assets/files/45534/chinstrap.514x600.jpg' background='rgb(240,100,100)' disabled={ this.state.disabled }  />}
+                  children={<Header name="Frosty" src='https://www.antarctica.gov.au/site/assets/files/45534/chinstrap.514x600.jpg' background='rgb(240,100,100)' disabled={ state.disabled }  />}
                 />
                 <List
                   key="2"
@@ -65,8 +59,8 @@ class App extends Component {
                   styl="inside"
                   color="white"
                   line="rgb(240,100,100)"
-                  change={this.handleChange}
-                  disabled = {this.state.disabled}
+                  change={handleChange}
+                  disabled = {state.disabled}
                 />
                 <List
                   key="3"
@@ -74,8 +68,8 @@ class App extends Component {
                   styl="outside"
                   color="white"
                   line="rgb(240,100,100)"
-                  change={this.handleChange}
-                  disabled = {this.state.disabled}
+                  change={handleChange}
+                  disabled = {state.disabled}
                   bar={1}
                 />
                 <List
@@ -84,8 +78,8 @@ class App extends Component {
                   styl="outside"
                   color="white"
                   line="rgb(240,100,100)"
-                  change={this.handleChange}
-                  disabled = {this.state.disabled}
+                  change={handleChange}
+                  disabled = {state.disabled}
                 />
               </div>
             }
@@ -101,8 +95,8 @@ class App extends Component {
                   styl="outside"
                   color="black"
                   line="rgb(240,100,100)"
-                  change={this.handleChange}
-                  disabled = {this.state.disabled}
+                  change={handleChange}
+                  disabled = {state.disabled}
                 />
                 <List
                   key="6"
@@ -110,8 +104,8 @@ class App extends Component {
                   styl="outside"
                   color="black"
                   line="rgb(240,100,100)"
-                  change={this.handleChange}
-                  disabled = {this.state.disabled}
+                  change={handleChange}
+                  disabled = {state.disabled}
                 />
                 <List
                   key="7"
@@ -119,17 +113,17 @@ class App extends Component {
                   styl= "outside"
                   color="black"
                   line="rgb(240,100,100)"
-                  change={this.handleChange}
-                  disabled = {this.state.disabled}
+                  change={handleChange}
+                  disabled = {state.disabled}
                 />
               </div>
             }
           />
         </div>
-        <input className = "submit"type="button" defaultValue= {this.state.disabled ? 'Edit':'Submit'} onClick={this.handleSubmit} />
+        <input className = "submit"type="button" defaultValue= {state.disabled ? 'Edit':'Submit'} onClick={handleSubmit} />
       </form>
     );
   }
-}
+
 
 export default App;

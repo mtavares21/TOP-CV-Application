@@ -1,56 +1,55 @@
-import React, { Component } from "react";
-import Bar from './Bar'
-class List extends Component {
+import React, { useState } from "react";
+import Bar from './Bar';
+import Button from './Button';
+function List (props) {
 
-  constructor(props) {
-    super(props);
-    this.input = this.input.bind(this)
-    this.newPara = this.newPara.bind(this);
-    this.state = { li: {lastID:1, 
-                        items: {
-                            id: [1], 
-                            text:['']} 
-                        }
-                    };
-  }
-
+    const [lastID, setLastID] = useState(1);
+    const [ items, setItems] = useState({
+                                  id: [1], 
+                                  text:['']
+                                }) 
+                     
  // Creat a new paragraph by setting state
-  newPara(){
-    this.setState( (preState) =>{
-        preState.li.items.id.push(preState.li.lastID+1);
-        preState.li.items.text.push('');    
-        preState.li.lastID +=1;
-        return preState;
-    })
+  function newPara() {
+    let newID = lastID;
+    newID=newID+1;
+    let newItems = Object.assign({}, items );
+    newItems.id.push(2)
+    newItems.text.push('')
+    newItems = { 
+        id: newItems.id,
+        text: newItems.text
     }
-  input(){
+    setLastID(newID);
+    setItems(newItems);
+  }
+  function input   () {
     return (
-        <ul id={this.props.title} style={{listStyle: this.props.styl}}> 
+        <ul id={props.title} style={{listStyle: props.styl}}> 
             {/* Map state items  */}
-            {this.state.li.items.id.map( (li) => (
-            <li key={"li" + li + this.props.title} id={li + this.props.title}>
-              <textarea key={ "txt" + li + this.props.title} id= {"txt" + li + this.props.title}
-                onChange={ this.props.change }
+            {items.id.map( (li) => (
+            <li key={"li" + li + props.title} id={li + props.title}>
+              <textarea 
+                key={ "txt" + li + props.title} id= {"txt" + li + props.title}
+                onChange={ props.change }
                 type="text"
-                disabled={this.props.disabled}
-                style = {{ borderStyle: this.props.disabled? 'none':'solid', resize: this.props.disabled ? 'none':'both', color: this.props.color}}
+                disabled={props.disabled}
+                style = {{ borderStyle: props.disabled? 'none':'solid', resize: props.disabled ? 'none':'both', color: props.color}}
               />
             </li>
           ))}
-            <input type="button" value="New Topic" onClick={this.newPara}  style = {{ display: this.props.disabled ? 'none':'flex' }} />
+            <Button value = 'New Topic' click={newPara} disabled={props.disabled}/>
         </ul>
             )
   }
 
-  render() {
     return (
-      <div className="list" style={{ color: this.props.color }}>
-        <h2>{this.props.title}</h2>
-        <div className="line" style={{ backgroundColor: this.props.line }}></div>
-        { this.props.bar ? <Bar bar = {this.props.bar} color={this.props.color} disabled = {this.props.disabled} /> : this.input()  }
+      <div className="list" style={{ color: props.color }}>
+        <h2>{props.title}</h2>
+        <div className="line" style={{ backgroundColor: props.line }}></div>
+        { props.bar ? <Bar bar = {props.bar} color={props.color} disabled = {props.disabled} /> :input()  }
       </div>
     );
   }
-}
 
 export default List;

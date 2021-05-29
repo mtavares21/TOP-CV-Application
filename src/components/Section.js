@@ -1,14 +1,11 @@
-import React, {Component} from 'react'
+import React from 'react'
 
-class Section extends Component{
-
-render(){
+function Section (props){
 return (
-    <div className = 'Section' style={{ backgroundColor: this.props.color, width: this.props.width, height:this.props.height }}>
-        {this.props.children}
+    <div className = 'Section' style={{ backgroundColor: props.color, width: props.width, height: props.height }}>
+         {props.children}
     </div>
 )
-}
 }
 
 export default Section;

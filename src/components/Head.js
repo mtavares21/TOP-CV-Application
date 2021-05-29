@@ -1,29 +1,27 @@
-import React, {Component} from 'react'
-class Head extends Component{
+import React from 'react'
 
-render(){
+function Head (props){
 return (
         <div className= 'Head'>
             <img 
                 width='200px' 
                 height='250px' 
-                src={this.props.src} 
+                src={props.src} 
                 alt='upload for cv' 
             />
             <textarea 
                 className='name' 
-                defaultValue={ this.props.name }
-                disabled={this.props.disabled}
+                defaultValue={ props.name }
+                disabled={props.disabled}
                 style = {{ 
-                        borderStyle: this.props.disabled? 'none':'solid',
-                        resize: this.props.disabled ? 'none':'both', 
-                        color: this.props.color,
-                        backgroundColor: this.props.background,
+                        borderStyle: props.disabled? 'none':'solid',
+                        resize: props.disabled ? 'none':'both', 
+                        color: props.color,
+                        backgroundColor: props.background,
                         }}
             />
         </div>
         )
     }
-}
 
 export default Head

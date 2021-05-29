@@ -1,94 +1,103 @@
-import React, {Component} from 'react'
-
-class Bar extends Component{
-
-constructor(props){
-    super(props);
-    this.pointColor = this.pointColor.bind(this);
-    this.addSkill = this.addSkill.bind(this);
-    this.setSkill = this.setSkill.bind(this);
-    this.ids = [1,2,3,4,5,6,7]
-    this.state = { 
-                    pointClass:[],
-                    skills:[]
-                 }
+import React, { useEffect, useState } from "react";
+import Button from "./Button";
+// Point Component: checked or not?
+function Point(props) {
+  return (
+    <div
+      className={props.checked ? "point1" : "point0"}
+      onClick={ props.disabled?null:props.click}
+    />
+  );
 }
-// Add new skill inputs
-addSkill (event) {
-event.preventDefault()
-this.ids = this.ids.map( item => item = item+1)
-    this.setState( prevState =>{
-            prevState.pointClass.push( ['point1', 'point0', 'point0', 'point0', 'point0'])
-            prevState.skills.push('')
-        return prevState
-    })
-}
-// Set skill name onChange in state
-setSkill(event){
-event.preventDefault()
-    const skillIndex = event.target.attributes[0].value;
-    this.setState( prevState => {
-        prevState.skills[skillIndex] = event.target.value
-    return prevState
+// Responsive five Points rating
+function Rating(props) {
+  const [id, setId] = useState(0);
+  const [rating, setRate] = useState(props.rate);
+  const proto = [];
+  let i = 1;
+  while (i <= 5) {
+    if (i <= rating) {
+      proto.push(1);
+    } else {
+      proto.push(0);
     }
-)
+    i++;
+  }
+  return (
+    <div className="pointWrap">
+      {proto.map((rate, index) => (
+        <Point
+          click={() => {
+            parseFloat(index + 1) === parseFloat(rating)
+              ? setRate((prevRate) => index)
+              : setRate((prevRate) => index + 1);
+          }}
+          checked={rate}
+          key={`${id}${index}`}
+         disabled={props.disabled}
+        />
+      ))}
+    </div>
+  );
 }
-// Set point color when clicked
-pointColor (event) {
-    event.preventDefault()
-    const index = event.target.attributes[0].value.slice(0,1);
-    const point = event.target.attributes[0].value.slice(1);
-    const stateIndex = this.state.pointClass[index];
-    const newState = stateIndex.map( (item, index) =>{ 
-            index<=point ? item = 'point1' : item = 'point0'
-        return item
-    })
-   this.setState( prevState => {
-        prevState.pointClass[index]=newState;
-        return prevState
-   })
+// Skill input
+function Skill(props) {
+const [text, setText] = useState('')
+  return (
+    <input
+      onChange={ (e) => setText(e.target.value)}
+      value={text}
+      disabled={props.disabled}
+      index={props.index}
+      className = '.bar input'
+      type="text"
+      style={{
+        borderStyle: props.disabled ? "none" : "solid",
+        color: props.color,
+      }}
+    />
+  );
 }
-render() {
-console.log(this.state)
-return (
-        <div>
-            {
-        this.state.skills.map( (item, index) => {
-            return (
-            <div key = {this.ids[index]} className='bar'>
-                <input 
-                    key = {this.ids[index+1]} 
-                    index={ index } 
-                    onChange = { this.setSkill } 
-                    type='text' 
-                    value = {this.state.skills[index]} 
-                    disabled={ this.props.disabled } 
-                    style = {{ borderStyle: this.props.disabled ? 'none':'solid', color: this.props.color}}
-                /> 
-                <div key = {this.ids[index+2]} className = 'pointWrap'>
-                    {this.state.pointClass[index].map( (point,n) => 
-                        <div 
-                            index={ index + '' + n } 
-                            key = { this.ids[index] + n }  
-                            className = { point } 
-                            onClick={ this.props.disabled? ()=>'':this.pointColor } 
-                        >
-                    </div> )}
-                </div>
-            </div>
-            )
-        }
-    )
-}
-            <input 
-                type="button" 
-                value="New Skill" 
-                onClick={ this.addSkill }  
-                style = {{ display: this.props.disabled ? 'none':'flex' }} />
-        </div>
-        )
-}
+// Composed Component
+function Bar(props) {
+  let ids = [1, 2, 3, 4, 5, 6, 7];
+  const [pointClass, setPointClass] = useState([]);
+  const [skills, setSkills] = useState([]);
+
+  // Add new skill inputs
+  function addSkill(e) {
+    e.preventDefault();
+    const newSkills = skills;
+    newSkills.push("");
+    const newPoints = [...pointClass];
+    newPoints.push([0, 0, 0, 0, 0]);
+    setSkills([...newSkills]);
+    setPointClass([...newPoints]);
+  }
+
+  return (
+    <div>
+      {skills.map((item, index) => {
+        return (
+          <div className="bar">
+            <Skill
+              skill={skills[index]}
+              key={`skill${ids[index]}`}
+              disabled = {props.disabled}
+              color = {props.color}
+            />
+            <Rating key={`rating${ids[index]}`} disabled={props.disabled} />
+          </div>
+        );
+      })}
+      <Button
+        key={`sklBtn${ids}`}
+        click={addSkill}
+        disabled={props.disabled}
+        value="New Skill"
+      />
+    </div>
+  );
 }
 
-export default Bar
-
+export default Bar;
