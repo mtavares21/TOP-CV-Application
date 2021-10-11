@@ -1,5 +1,7 @@
 ## CV - Application
 
-### Build your own cv
+Fill this template with your information, press submit, and get a neat CV!
 
-Fill a form with your information and get a neat CV.
+## Live Preview
+
+https://mtavares21.github.io/TOP-CV-Application/
